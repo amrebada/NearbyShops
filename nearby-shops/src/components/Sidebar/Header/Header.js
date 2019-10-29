@@ -12,9 +12,10 @@ import {
 } from "@material-ui/icons";
 import { setMode, DISLIKE, ALL, LIKE } from "../../../actions/shops.action";
 import Signin from "./Signin/Signin";
+import { setModalVisabilty } from "../../../actions/auth.action";
 
 const Header = props => {
-  const [modal, setModal] = useState(true);
+  const [modal, setModal] = useState(props.token === "");
   const changeTo = mode => {
     switch (mode) {
       case props.mode:
@@ -32,14 +33,27 @@ const Header = props => {
 
   return (
     <div className={classes.container}>
-      <IconButton onClick={() => changeTo(DISLIKE)}>
+      <IconButton
+        onClick={() =>
+          props.token !== ""
+            ? changeTo(DISLIKE)
+            : props.dispatch(setModalVisabilty(true))
+        }
+      >
         {props.mode === DISLIKE ? (
           <ThumbDown color="primary" />
         ) : (
           <ThumbDownOutlined color="primary" />
         )}
       </IconButton>
-      <IconButton className={classes.margin} onClick={() => changeTo(LIKE)}>
+      <IconButton
+        className={classes.margin}
+        onClick={
+          props.token !== ""
+            ? () => changeTo(LIKE)
+            : () => props.dispatch(setModalVisabilty(true))
+        }
+      >
         {props.mode === LIKE ? (
           <Favorite color="secondary" />
         ) : (
@@ -49,17 +63,22 @@ const Header = props => {
       <Fab
         aria-label="profile"
         className={classes.profile}
-        onClick={() => setModal(prev => !prev)}
+        onClick={() =>
+          props.token === ""
+            ? props.dispatch(setModalVisabilty(true))
+            : () => {}
+        }
       >
         <Person />
       </Fab>
-      <Signin show={modal} onClose={() => setModal(prev => false)} />
+      <Signin />
     </div>
   );
 };
 const mapStateToProps = state => {
   return {
-    mode: state.mode
+    mode: state.mode,
+    token: state.auth.token
   };
 };
 export default connect(mapStateToProps)(Header);

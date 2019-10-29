@@ -1,12 +1,15 @@
 import React from "react";
 
 import classes from "./Signin.css";
+
+import { connect } from "react-redux";
 import {
   TextField,
   FormControlLabel,
   Checkbox,
   Button
 } from "@material-ui/core";
+import { setModalVisabilty } from "../../../../actions/auth.action";
 
 const Signin = props => {
   return (
@@ -14,7 +17,10 @@ const Signin = props => {
       className={classes.container}
       style={props.show ? {} : { display: "none" }}
     >
-      <div className={classes.dropback} onClick={props.onClose}></div>
+      <div
+        className={classes.dropback}
+        onClick={() => props.dispatch(setModalVisabilty(false))}
+      ></div>
       <div className={classes.modal}>
         <div className={classes.login}>
           <h2>Sign in</h2>
@@ -118,4 +124,9 @@ const Signin = props => {
   );
 };
 
-export default Signin;
+const mapStateToProps = state => {
+  return {
+    show: state.auth.modal
+  };
+};
+export default connect(mapStateToProps)(Signin);

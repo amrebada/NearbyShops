@@ -1,20 +1,38 @@
 import React from "react";
 
 import classes from "./ShopItem.css";
+import { connect } from "react-redux";
 
 import { LIKE, DISLIKE } from "../../../../actions/shops.action";
 
 import { IconButton, Fab } from "@material-ui/core";
 import { ThumbDown, Favorite, Remove } from "@material-ui/icons";
+import { setModalVisabilty } from "../../../../actions/auth.action";
 
 const ShopItem = props => {
   const { img, name, mode } = props.shop;
   let actions = (
     <React.Fragment>
-      <Fab variant="extended" color="secondary">
+      <Fab
+        variant="extended"
+        color="secondary"
+        onClick={
+          props.token !== ""
+            ? () => {}
+            : () => props.dispatch(setModalVisabilty(true))
+        }
+      >
         <ThumbDown /> &nbsp;<span>Dislike</span>
       </Fab>
-      <Fab variant="extended" color="primary">
+      <Fab
+        variant="extended"
+        color="primary"
+        onClick={
+          props.token !== ""
+            ? () => {}
+            : () => props.dispatch(setModalVisabilty(true))
+        }
+      >
         <Favorite /> &nbsp;<span>Like</span>
       </Fab>
     </React.Fragment>
@@ -44,5 +62,10 @@ const ShopItem = props => {
     </div>
   );
 };
+const mapStateToProps = state => {
+  return {
+    token: state.auth.token
+  };
+};
 
-export default ShopItem;
+export default connect(mapStateToProps)(ShopItem);
