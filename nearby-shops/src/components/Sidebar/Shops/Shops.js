@@ -23,7 +23,8 @@ const Shops = (props) => {
 
 const mapStateToProps = state => {
     return {
-        shops: [...state.shops]
+        shops: [...state.shops],
+        mode: state.mode
     }
 }
 export default connect(mapStateToProps)(Shops);

@@ -72,7 +72,7 @@ const MapContainer = (props) => {
                 attribution='Souq Al Mal'
                 url="http://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png"
             />
-            {props.shops.map(shop => <Marker icon={shop.selected ? activeicon : icon} position={shop.location}></Marker>)}
+            {props.shops.map(shop => <Marker key={shop.id} icon={shop.selected ? activeicon : icon} position={shop.location}></Marker>)}
 
 
 

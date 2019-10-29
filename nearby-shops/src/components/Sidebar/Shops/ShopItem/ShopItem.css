@@ -3,7 +3,7 @@
   height: 190px;
   background: #ffffff;
   border-radius: 20px;
-  box-shadow: 5px 5px 25px rgba(204, 204, 204, 0.555);
+  box-shadow: 5px 5px 25px #c3b5c2;
   display: flex;
   align-items: stretch;
   flex-direction: row-reverse;
