@@ -40,7 +40,8 @@ const Header = (props) => {
 }
 const mapStateToProps = state => {
     return {
-        mode: state.mode
+        mode: state.mode,
+
     }
 }
 export default connect(mapStateToProps)(Header);
