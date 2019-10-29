@@ -1,0 +1,5 @@
+.container {
+  flex: 9;
+  overflow-y: scroll;
+  text-align: center;
+}

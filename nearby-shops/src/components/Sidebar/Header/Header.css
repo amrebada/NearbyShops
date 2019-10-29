@@ -1,0 +1,14 @@
+.container {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 20px;
+}
+.profile {
+  color: grey !important;
+}
+.margin {
+  margin-left: 30px !important;
+  margin-right: 30px !important;
+}
