@@ -1,4 +1,6 @@
 {
   "DB_URL": "mongodb://localhost:27017/nearbyamrebada",
-  "KEY": "SouqAlMalSecretKey"
+  "KEY": "SouqAlMalSecretKey",
+  "GOOGLE_API_KEY": "AIzaSyAev-kHfisK9aZ7g-6daRw8a-0dLLaRwE0",
+  "AUTO": true
 }

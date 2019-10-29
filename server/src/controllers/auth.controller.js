@@ -76,6 +76,7 @@ class Auth {
     let token = JWT.sign({ id: savedUser._id }, JWK.asKey(config.KEY));
     return { token };
   }
-  logout(token) {}
+
+  logout(token) { }
 }
 module.exports = new Auth();
