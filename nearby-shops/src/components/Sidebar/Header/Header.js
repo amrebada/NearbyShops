@@ -64,7 +64,7 @@ const Header = props => {
       <Fab
         aria-label="profile"
         className={classes.profile}
-        color={props.token !== "" ? "primary" : "defaulr"}
+        color={props.token !== "" ? "primary" : "default"}
         onClick={() =>
           props.token === ""
             ? props.dispatch(setModalVisabilty(true))
