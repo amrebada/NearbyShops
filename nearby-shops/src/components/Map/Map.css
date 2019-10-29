@@ -11,6 +11,10 @@
   /* background: #ebebf323; */
   z-index: 1000;
 }
+
+.logo {
+  margin: 30px;
+}
 .iconMarker {
   width: 24px;
   height: 24px;
@@ -23,6 +27,8 @@
 .iconMarker.selected {
   width: 48px;
   height: 48px;
+  background: linear-gradient(to left, #923333, #923333);
+  z-index: 1001;
 }
 
 .iconHere {
@@ -36,6 +42,34 @@
   align-items: center;
   color: white;
   animation: ribbles 2s ease infinite;
+}
+
+.direction {
+  width: 100%;
+  height: 80%;
+  position: relative;
+}
+
+.up {
+  position: absolute !important;
+  top: 0;
+  left: 50%;
+}
+
+.down {
+  position: absolute !important;
+  bottom: 0;
+  left: 50%;
+}
+.left {
+  position: absolute !important;
+  top: 50%;
+  left: 0;
+}
+.right {
+  position: absolute !important;
+  top: 50%;
+  right: 0;
 }
 
 @keyframes ribbles {

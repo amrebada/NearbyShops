@@ -8,7 +8,7 @@ import { ThumbDown, FavoriteBorder, Favorite } from '@material-ui/icons';
 const ShopItem = (props) => {
     const { img, name } = props;
 
-    return (<div className={classes.card}>
+    return (<div className={classes.card} onMouseEnter={props.onHover} onMouseLeave={props.onBlur}>
         <div className={classes.imgContainer}
             style={{ backgroundImage: `url(${img})` }}
         >
