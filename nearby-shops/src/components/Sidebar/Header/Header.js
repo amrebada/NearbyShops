@@ -8,11 +8,12 @@ import {
   FavoriteBorder,
   ThumbDown,
   Favorite,
-  ThumbDownOutlined
+  ThumbDownOutlined,
+  ExitToApp
 } from "@material-ui/icons";
 import { setMode, DISLIKE, ALL, LIKE } from "../../../actions/shops.action";
 import Signin from "./Signin/Signin";
-import { setModalVisabilty } from "../../../actions/auth.action";
+import { setModalVisabilty, setToken } from "../../../actions/auth.action";
 
 const Header = props => {
   const [modal, setModal] = useState(props.token === "");
@@ -63,13 +64,18 @@ const Header = props => {
       <Fab
         aria-label="profile"
         className={classes.profile}
+        color={props.token !== "" ? "primary" : "defaulr"}
         onClick={() =>
           props.token === ""
             ? props.dispatch(setModalVisabilty(true))
-            : () => {}
+            : props.dispatch(setToken(""))
         }
       >
-        <Person />
+        {props.token !== "" ? (
+          <ExitToApp style={{ color: "white" }} />
+        ) : (
+          <Person />
+        )}
       </Fab>
       <Signin />
     </div>

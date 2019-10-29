@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { LIKE, DISLIKE } from "../../../../actions/shops.action";
 
 import { IconButton, Fab } from "@material-ui/core";
-import { ThumbDown, Favorite, Remove } from "@material-ui/icons";
+import { ThumbDown, Favorite, Delete } from "@material-ui/icons";
 import { setModalVisabilty } from "../../../../actions/auth.action";
 
 const ShopItem = props => {
@@ -40,7 +40,7 @@ const ShopItem = props => {
   if (mode === LIKE || mode === DISLIKE) {
     actions = (
       <Fab variant="extended" color="secondary">
-        <Remove /> &nbsp;<span>remove</span>
+        <Delete /> &nbsp;<span>remove</span>
       </Fab>
     );
   }
