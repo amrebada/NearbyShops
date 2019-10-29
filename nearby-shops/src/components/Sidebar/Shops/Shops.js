@@ -11,11 +11,11 @@ const Shops = (props) => {
 
     return (<div className={classes.container}>
         <h3>216 Shops around you</h3>
-        {props.shops.map((d, i) => <React.Fragment key={i}>
+        {props.shops.map((d, i) => props.mode === d.mode ? <React.Fragment key={i}>
             <ShopItem img={d.img} name={d.name}
                 onHover={() => props.dispatch(setSelected(d.id))}
                 onBlur={() => props.dispatch(clear())} /> <br />
-        </React.Fragment>)}
+        </React.Fragment> : null)}
         <br />
 
     </div>);
