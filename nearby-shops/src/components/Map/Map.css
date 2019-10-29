@@ -1,0 +1,57 @@
+.container {
+  flex: 3;
+  position: relative;
+}
+.shadow {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  box-shadow: inset 0px 0px 10vh 15vh #ebebf3;
+  /* background: #ebebf323; */
+  z-index: 1000;
+}
+.iconMarker {
+  width: 24px;
+  height: 24px;
+  background: linear-gradient(to left, #5e38a0, #7a3392);
+  border-radius: 50%;
+  box-shadow: 5px 5px 10px 2px #855e92;
+  transition: all 0.5s ease-in-out;
+}
+
+.iconMarker.selected {
+  width: 48px;
+  height: 48px;
+}
+
+.iconHere {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(to left, #5e38a0, #7a3392);
+  border-radius: 50%;
+  box-shadow: 0px 0px 10px 2px #855e92;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  animation: ribbles 2s ease infinite;
+}
+
+@keyframes ribbles {
+  0% {
+    box-shadow: 0px 0px 10px 2px #855e92;
+  }
+  50% {
+    box-shadow: 5px 5px 20px 10px #855e92;
+  }
+  100% {
+    box-shadow: 0px 0px 10px 2px #855e92;
+  }
+}
+@-o-keyframes ribbles {
+}
+@-moz-keyframes ribbles {
+}
+@-webkit-keyframes ribbles {
+}

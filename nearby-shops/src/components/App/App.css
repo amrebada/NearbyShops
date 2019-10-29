@@ -1,0 +1,21 @@
+:global body {
+  margin: 0px;
+  padding: 0px;
+}
+
+:global * {
+  box-sizing: border-box;
+  font-family: "robot", sans-serif;
+}
+
+.App {
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  /* background: linear-gradient(to left, #cecad9, #ebebf3); */
+  background: #ebebf3;
+}
