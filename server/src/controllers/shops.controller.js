@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 const config = require("../../config.json");
 const { JWT, JWK } = require("jose");
 const fetch = require('node-fetch');
+const { ALL, SAMPLE } = require('../models/constants/constants')
 
 class Shops {
     getPhotoURL(photo) {
@@ -28,17 +29,20 @@ class Shops {
         try {
             if (config.AUTO) {
 
-                let body = await fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${
-                    location}&type=shop&key=${config.GOOGLE_API_KEY}&rankby=distance`);
-                let json = await body.json();
+                // let body = await fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${
+                //     location}&type=shop&key=${config.GOOGLE_API_KEY}&rankby=distance`);
+                // let json = await body.json();
 
-                return json.results.map(place => ({
-                    id: place.id,
-                    name: place.name,
-                    icon: place.icon,
-                    location: place.geometry.location,
-                    photo: place.photos && place.photos.length >= 1 ? this.getPhotoURL(place.photos[0]) : null
-                }));
+
+                // return json.results.map(place => ({
+                //     id: place.id,
+                //     name: place.name,
+                //     icon: place.icon,
+                //     location: [place.geometry.location.lat, place.geometry.location.lng],
+                //     mode: ALL,
+                //     photo: place.photos && place.photos.length >= 1 ? this.getPhotoURL(place.photos[0]) : null
+                // }));
+                return SAMPLE;
             }
         } catch (error) {
             console.log(error);

@@ -1,8 +1,8 @@
 import { SET_MODAL_VISABLITY, SET_TOKEN } from "../actions/auth.action";
 
 const InitialState = {
-  token: "llsdllsd",
-  modal: false
+  token: localStorage.getItem('token'),
+  modal: localStorage.getItem('token') === null || localStorage.getItem('token') === ""
 };
 
 export default (state = InitialState, action) => {

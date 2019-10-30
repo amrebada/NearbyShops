@@ -10,15 +10,15 @@ import { ThumbDown, Favorite, Delete } from "@material-ui/icons";
 import { setModalVisabilty } from "../../../../actions/auth.action";
 
 const ShopItem = props => {
-  const { img, name, mode } = props.shop;
+  const { photo, name, mode } = props.shop;
   let actions = (
     <React.Fragment>
       <Fab
         variant="extended"
         color="secondary"
         onClick={
-          props.token !== ""
-            ? () => {}
+          props.token !== "" && props.token !== null
+            ? () => { }
             : () => props.dispatch(setModalVisabilty(true))
         }
       >
@@ -28,8 +28,8 @@ const ShopItem = props => {
         variant="extended"
         color="primary"
         onClick={
-          props.token !== ""
-            ? () => {}
+          props.token !== "" && props.token !== null
+            ? () => { }
             : () => props.dispatch(setModalVisabilty(true))
         }
       >
@@ -52,7 +52,7 @@ const ShopItem = props => {
     >
       <div
         className={classes.imgContainer}
-        style={{ backgroundImage: `url(${img})` }}
+        style={{ backgroundImage: `url(${photo})` }}
       ></div>
       <div className={classes.cardContent}>
         <p style={{ fontSize: "23px" }}>{name}</p>

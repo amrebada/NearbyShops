@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import classes from "./Signin.css";
 
@@ -9,10 +9,12 @@ import {
   Checkbox,
   Button
 } from "@material-ui/core";
-import { setModalVisabilty } from "../../../../actions/auth.action";
-import { sendLogin } from "../../../../services/auth.services";
+import { setModalVisabilty, setToken } from "../../../../actions/auth.action";
+import { sendLogin, sendSignup } from "../../../../services/auth.services";
 
 const Signin = props => {
+
+
   const [login, setLogin] = useState({
     email: "",
     password: "",
@@ -21,14 +23,56 @@ const Signin = props => {
     passwordError: false
   });
 
+  const [signup, setSignup] = useState({
+    email: "",
+    password: "",
+    cpassword: "",
+    emailError: false,
+    passwordError: false,
+    cpasswordError: false
+  });
+
   const handleLogin = async () => {
     if (!login.passwordError && !login.emailError) {
       let data = (await sendLogin(login.email, login.password)).data;
       if (data.success) {
-        alert(data.data);
+        localStorage.setItem("token", data.data);
+        props.dispatch(setToken(data.data))
+        setLogin({
+          email: "",
+          password: "",
+          remember: false,
+          emailError: false,
+          passwordError: false
+        });
+        props.dispatch(setModalVisabilty(false))
       } else {
         alert(data.error.message);
       }
+
+
+    }
+  };
+
+  const handleSignup = async () => {
+    if (!signup.passwordError && !signup.emailError && !signup.cpasswordError) {
+      let data = (await sendSignup(signup.email, signup.password, signup.cpassword)).data;
+      if (data.success) {
+        localStorage.setItem("token", data.data);
+        props.dispatch(setToken(data.data));
+        setSignup({
+          email: "",
+          password: "",
+          cpassword: "",
+          emailError: false,
+          passwordError: false,
+          cpasswordError: false
+        })
+        props.dispatch(setModalVisabilty(false))
+      } else {
+        alert(data.error.message);
+      }
+
     }
   };
 
@@ -41,10 +85,26 @@ const Signin = props => {
     }
   };
   const validatePassword = () => {
-    if (login.password.length < 6) {
+    if (login.password.length < 5) {
       setLogin(prev => ({ ...prev, passwordError: true }));
     } else {
       setLogin(prev => ({ ...prev, passwordError: false }));
+    }
+  };
+
+  const validateEmailSignup = () => {
+    let re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{1,}))$/;
+    if (!re.test(signup.email)) {
+      setSignup(prev => ({ ...prev, emailError: true }));
+    } else {
+      setSignup(prev => ({ ...prev, emailError: false }));
+    }
+  };
+  const validatePasswordSignup = () => {
+    if (signup.password.length < 5) {
+      setSignup(prev => ({ ...prev, passwordError: true }));
+    } else {
+      setSignup(prev => ({ ...prev, passwordError: false }));
     }
   };
 
@@ -65,7 +125,7 @@ const Signin = props => {
             error={login.emailError}
             id="signin-email"
             label="Email"
-            defaultValue={login.email}
+            value={login.email}
             helperText={login.emailError ? "please type valid email" : ""}
             className={classes.textField}
             margin="normal"
@@ -86,7 +146,7 @@ const Signin = props => {
             error={login.passwordError}
             id="signin-password"
             label="Password"
-            defaultValue={login.password}
+            value={login.password}
             helperText={
               login.passwordError
                 ? "password has to be more than 6 characters"
@@ -137,35 +197,68 @@ const Signin = props => {
           <h2>Sign up</h2>
 
           <TextField
+            error={signup.emailError}
             id="signup-email"
             label="Email"
-            defaultValue=""
-            helperText=""
+            value={signup.email}
+            helperText={signup.emailError ? "please type valid email" : ""}
             className={classes.textField}
             margin="normal"
             variant="outlined"
+            onChange={e => {
+              if (e.target !== null) {
+                const value = e.target.value;
+                setSignup(prev => ({
+                  ...prev,
+                  email: value
+                }));
+                validateEmailSignup();
+              }
+            }}
           />
 
           <TextField
+            error={signup.passwordError}
             id="signup-password"
             label="Password"
-            defaultValue=""
-            helperText=""
+            value={signup.password}
+            helperText={signup.passwordError ? "password has to be more than 6 characters" : ""}
             className={classes.textField}
             margin="normal"
             variant="outlined"
             type="password"
+            onChange={e => {
+              if (e.target !== null) {
+                const value = e.target.value;
+                setSignup(prev => ({
+                  ...prev,
+                  password: value
+                }));
+                validatePasswordSignup();
+              }
+            }}
           />
 
           <TextField
+            error={signup.cpasswordError}
             id="signup-cpassword"
             label="Confirm password"
-            defaultValue=""
-            helperText=""
+            value={signup.cpassword}
+            helperText={signup.cpasswordError ? "passwords not matched" : ""}
             className={classes.textField}
             margin="normal"
             variant="outlined"
             type="password"
+            onChange={e => {
+              if (e.target !== null) {
+                const value = e.target.value;
+                setSignup(prev => ({
+                  ...prev,
+                  cpassword: value
+                }));
+                validatePasswordSignup();
+              }
+            }}
           />
 
           <Button
@@ -173,6 +266,7 @@ const Signin = props => {
             color="secondary"
             className={classes.button}
             size="large"
+            onClick={handleSignup}
           >
             Sign up
           </Button>
