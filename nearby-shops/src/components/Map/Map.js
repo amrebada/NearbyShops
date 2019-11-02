@@ -1,4 +1,4 @@
-import React, { useState, useEffect, } from "react";
+import React, { useState, useEffect } from "react";
 import ReactDOMServer from "react-dom/server";
 
 import { connect } from "react-redux";
@@ -20,31 +20,40 @@ import { IconButton } from "@material-ui/core";
 import { getShops } from "../../services/shops.service";
 import { setShops } from "../../actions/shops.action";
 
-
 const MapContainer = props => {
-  const [center, setCenter] = useState([25.204849, 55.270782])
-  const [location, setLocation] = useState([25.204849, 55.270782]);
+  const [center, setCenter] = useState([25.1287887, 55.21457990000001]);
+  const [location, setLocation] = useState([25.1287887, 55.21457990000001]);
 
   const getPosition = () => {
-    navigator.geolocation.getCurrentPosition(res => {
-      setCenter([res.coords.latitude, res.coords.longitude])
-      setLocation([res.coords.latitude, res.coords.longitude])
-      getShops([res.coords.latitude, res.coords.longitude]).then(res => {
-        if (res.data.success) {
-          console.log(res.data.data);
+    navigator.geolocation.getCurrentPosition(
+      res => {
+        setCenter([res.coords.latitude, res.coords.longitude]);
+        setLocation([res.coords.latitude, res.coords.longitude]);
+        getShops([res.coords.latitude, res.coords.longitude]).then(res => {
+          if (res.data.success) {
+            console.log(res.data.data);
 
-          props.dispatch(setShops(res.data.data))
-        }
-      })
-    }, err => {
-      setTimeout(() => {
-        getPosition();
-      }, 3000);
-    });
-  }
+            props.dispatch(setShops(res.data.data));
+          }
+        });
+      },
+      err => {
+        setTimeout(() => {
+          getPosition();
+        }, 3000);
+      }
+    );
+  };
   useEffect(() => {
-    getPosition()
-  }, [])
+    // getPosition()
+    getShops(center).then(res => {
+      if (res.data.success) {
+        console.log(res.data.data);
+
+        props.dispatch(setShops(res.data.data));
+      }
+    });
+  }, [props.mode]);
 
   const icon = new DivIcon({
     html: `<div class="${classes.iconMarker}" ></div>`,
@@ -62,7 +71,6 @@ const MapContainer = props => {
         </div>`,
     className: classes.DivIcon
   });
-
 
   const move = direction => {
     switch (direction) {

@@ -13,8 +13,6 @@ import { setModalVisabilty, setToken } from "../../../../actions/auth.action";
 import { sendLogin, sendSignup } from "../../../../services/auth.services";
 
 const Signin = props => {
-
-
   const [login, setLogin] = useState({
     email: "",
     password: "",
@@ -36,8 +34,8 @@ const Signin = props => {
     if (!login.passwordError && !login.emailError) {
       let data = (await sendLogin(login.email, login.password)).data;
       if (data.success) {
-        localStorage.setItem("token", data.data);
-        props.dispatch(setToken(data.data))
+        localStorage.setItem("token", data.data.token);
+        props.dispatch(setToken(data.data.token));
         setLogin({
           email: "",
           password: "",
@@ -45,21 +43,23 @@ const Signin = props => {
           emailError: false,
           passwordError: false
         });
-        props.dispatch(setModalVisabilty(false))
+        props.dispatch(setModalVisabilty(false));
       } else {
         alert(data.error.message);
       }
-
-
     }
   };
 
   const handleSignup = async () => {
     if (!signup.passwordError && !signup.emailError && !signup.cpasswordError) {
-      let data = (await sendSignup(signup.email, signup.password, signup.cpassword)).data;
+      let data = (await sendSignup(
+        signup.email,
+        signup.password,
+        signup.cpassword
+      )).data;
       if (data.success) {
-        localStorage.setItem("token", data.data);
-        props.dispatch(setToken(data.data));
+        localStorage.setItem("token", data.data.token);
+        props.dispatch(setToken(data.data.token));
         setSignup({
           email: "",
           password: "",
@@ -67,12 +67,11 @@ const Signin = props => {
           emailError: false,
           passwordError: false,
           cpasswordError: false
-        })
-        props.dispatch(setModalVisabilty(false))
+        });
+        props.dispatch(setModalVisabilty(false));
       } else {
         alert(data.error.message);
       }
-
     }
   };
 
@@ -222,7 +221,11 @@ const Signin = props => {
             id="signup-password"
             label="Password"
             value={signup.password}
-            helperText={signup.passwordError ? "password has to be more than 6 characters" : ""}
+            helperText={
+              signup.passwordError
+                ? "password has to be more than 6 characters"
+                : ""
+            }
             className={classes.textField}
             margin="normal"
             variant="outlined"

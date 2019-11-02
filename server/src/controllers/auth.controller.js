@@ -15,7 +15,7 @@ class Auth {
     return new Promise((resolve, reject) => {
       bcrypt.compare(password, user.password, async (err, Equal) => {
         if (err) {
-          reject(ApiError(ErrorTypes.INTERNAL_ERROR, "interntal server error"));
+          reject(ApiError(ErrorTypes.INTERNAL_ERROR, "internal server error"));
         }
         if (Equal) {
           let token = JWT.sign({ id: user._id }, JWK.asKey(config.KEY));
@@ -57,7 +57,7 @@ class Auth {
   async signUp(email, password, cpassword) {
     let searchedUser = await Users.findOne({ email });
     if (searchedUser) {
-      throw ApiError(ErrorTypes.CONFLICT, "this email regestered before");
+      throw ApiError(ErrorTypes.CONFLICT, "this email registered before");
     }
     if (password !== cpassword) {
       throw ApiError(ErrorTypes.BAD_REQUEST, "password not matched");
@@ -77,6 +77,6 @@ class Auth {
     return { token };
   }
 
-  logout(token) { }
+  logout(token) {}
 }
 module.exports = new Auth();

@@ -16,7 +16,6 @@ import Signin from "./Signin/Signin";
 import { setModalVisabilty, setToken } from "../../../actions/auth.action";
 
 const Header = props => {
-
   const changeTo = mode => {
     switch (mode) {
       case props.mode:
@@ -32,11 +31,11 @@ const Header = props => {
     }
   };
 
-
   const handleLogout = () => {
     props.dispatch(setToken(""));
-    localStorage.removeItem('token')
-  }
+    props.dispatch(setMode(ALL));
+    localStorage.removeItem("token");
+  };
 
   return (
     <div className={classes.container}>
@@ -50,8 +49,8 @@ const Header = props => {
         {props.mode === DISLIKE ? (
           <ThumbDown color="primary" />
         ) : (
-            <ThumbDownOutlined color="primary" />
-          )}
+          <ThumbDownOutlined color="primary" />
+        )}
       </IconButton>
       <IconButton
         className={classes.margin}
@@ -64,13 +63,15 @@ const Header = props => {
         {props.mode === LIKE ? (
           <Favorite color="secondary" />
         ) : (
-            <FavoriteBorder color="secondary" />
-          )}
+          <FavoriteBorder color="secondary" />
+        )}
       </IconButton>
       <Fab
         aria-label="profile"
         className={classes.profile}
-        color={props.token !== "" && props.token !== null ? "primary" : "default"}
+        color={
+          props.token !== "" && props.token !== null ? "primary" : "default"
+        }
         onClick={() =>
           props.token === "" || props.token === null
             ? props.dispatch(setModalVisabilty(true))
@@ -80,8 +81,8 @@ const Header = props => {
         {props.token !== "" && props.token !== null ? (
           <ExitToApp style={{ color: "white" }} />
         ) : (
-            <Person />
-          )}
+          <Person />
+        )}
       </Fab>
 
       <Signin />
