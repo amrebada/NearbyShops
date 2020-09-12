@@ -29,6 +29,6 @@
     "iplocation": "^6.1.0",
     "jose": "^1.10.1",
     "mongoose": "^5.7.7",
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^2.6.1"
   }
 }
